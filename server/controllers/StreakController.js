@@ -1,5 +1,6 @@
 // controllers/streakController.js
-const { Streak } = require('../database/models/StreakModel.js');
+const db = require('../database');
+const Streak = db.models.Streak;
 
 exports.getAllStreaks = async (req, res) => {
   try {

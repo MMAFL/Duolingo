@@ -1,5 +1,6 @@
 // controllers/userController.js
-const { User } = require('../database/models/UserModel');
+const db = require('../database');
+const User = db.models.User;
 
 exports.getAllUsers = async (req, res) => {
   try {
