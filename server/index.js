@@ -1,19 +1,23 @@
 const express = require("express");
-const app = express();
-const cors = require("cors");
-const port = 3000;
-require("./database/index");
+const App = express();
+const port = 4000;
+const cors = require("cors")
+const db = require("./database/index.js")
+
+const exercisesRoutes = require('./routes/exercises');
+const gemsRoutes = require('./routes/gems');
+const levelsRoutes = require('./routes/levels');
+
+App.use(cors())
+App.use(express.json())
+App.use(express.urlencoded({ extended: true }));
+
+App.use('/exercises', exercisesRoutes);
+
+App.use('/gems', gemsRoutes);
+App.use('/levels', levelsRoutes);
 
 
-app.use(express.json());
-
-app.use(cors());
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
+App.listen(port, () => {
+    console.log(`app listening on http://127.0.0.1:${port}`);
+  });

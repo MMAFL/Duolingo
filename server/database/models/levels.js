@@ -1,4 +1,4 @@
-const levels = (sequelize, DataTypes) => {
+const Levels = (sequelize, DataTypes) => {
   const Levels = sequelize.define("levels", {
     level_title: {
       type: DataTypes.STRING,
@@ -18,4 +18,4 @@ const levels = (sequelize, DataTypes) => {
   return Levels;
 };
 
-module.exports = levels;
+module.exports = Levels;
