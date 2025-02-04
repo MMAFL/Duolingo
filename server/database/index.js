@@ -7,18 +7,10 @@ const Language = require("./language.model");
 const Achievement = require("./achievement.model");
 const UserAchievement = require("./userAchievement.model");
 const Progress = require("./progress.model");
-const Question = require("./question.model");
-const Choice = require("./choice.model");
+
 const LessonsUsers = require("./lessonsUsers.model");
 const LanguageUsers = require("./languageUsers.model");
-const Hearts = require("./hearts.model");
-const Gems = require("./gems.model");
-const Leaderboard = require("./leaderboard.model");
-const Streak = require("./streak.model");
-const Levels = require("./levels.model");
-const Quiz = require("./quiz.model");
 
-// User relationships
 User.belongsToMany(Lesson, { foreignKey: "userId", through: LessonsUsers });
 Lesson.belongsToMany(User, { foreignKey: "lessonId", through: LessonsUsers });
 
@@ -51,8 +43,8 @@ Progress.belongsTo(User, { foreignKey: "userId" });
 Lesson.hasMany(Progress, { foreignKey: "lessonId" });
 Progress.belongsTo(Lesson, { foreignKey: "lessonId" });
 
-Level.hasMany(Progress, { foreignKey: "levelId" });
-Progress.belongsTo(Level, { foreignKey: "levelId" });
+Levels.hasMany(Progress, { foreignKey: "levelId" });
+Progress.belongsTo(Levels, { foreignKey: "levelId" });
 
 // Language relationships
 Language.hasMany(Levels, { foreignKey: "languageId" });
@@ -63,8 +55,8 @@ Lesson.belongsTo(Levels, { foreignKey: "levelId" });
 Levels.hasMany(Lesson, { foreignKey: "levelId" });
 
 // Quiz relationships
-Level.hasOne(Quiz, { foreignKey: "levelId" });
-Quiz.belongsTo(Level, { foreignKey: "levelId" });
+Levels.hasOne(Quiz, { foreignKey: "levelId" });
+Quiz.belongsTo(Levels, { foreignKey: "levelId" });
 
 // Streak relationships
 User.hasOne(Streak, { foreignKey: "userId" });
