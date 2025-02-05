@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../index');
+
 module.exports = function(sequelize, DataTypes) {
     const Lesson = sequelize.define('Lesson', {
       lesson_title: {

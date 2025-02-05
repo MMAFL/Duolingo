@@ -1,4 +1,5 @@
-const { Lesson } = require('../database/models');
+const { Lesson } = require('../database/models/lessons.mode');
+
 
 const LessonsController = {
     // Retrieve all lessons for a given level

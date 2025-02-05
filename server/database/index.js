@@ -37,12 +37,12 @@ db.models.Streak = require('./models/StreakModel')(sequelize, DataTypes);
 db.models.User.hasMany(db.models.Streak, { foreignKey: 'user_id' });
 db.models.Streak.belongsTo(db.models.User, { foreignKey: 'user_id' });
 
-db.sequelize.sync({ force: false, alter: false })
-  .then(() => {
-    console.log('Database synchronized');
-  })
-  .catch((err) => {
-    console.error('Error synchronizing database:', err);
-  });
+// db.sequelize.sync({ force: false, alter: false })
+//   .then(() => {
+//     console.log('Database synchronized');
+//   })
+//   .catch((err) => {
+//     console.error('Error synchronizing database:', err);
+//   });
 
 module.exports = db;

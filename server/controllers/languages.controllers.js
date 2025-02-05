@@ -16,9 +16,7 @@ const LanguageController = {
         const { languageId } = req.body;
         const userId = req.user.id; // Assuming user is authenticated
 
-        if (!languageId) {
-            return res.status(400).json({ error: 'Language ID is required' });
-        }
+       
 
         try {
             // Check if language exists
