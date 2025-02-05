@@ -7,6 +7,8 @@ const db = require("./database/index.js");
 // Import routes
 const userRoutes = require("./routes/UsersRoute");
 const streakRoutes = require("./routes/StreakRoute");
+const lessonRoutes = require("./routes/LessonRoute");
+const languageRoutes = require("./routes/LanguageRoute");
 const achievementRoutes = require("./routes/achievementRoutes");
 
 // Middleware
@@ -22,7 +24,8 @@ App.get("/api/health", (req, res) => {
 // Mount routes
 App.use("/api/users", userRoutes);
 App.use("/api/streaks", streakRoutes);
-App.use("/api/achievements", achievementRoutes);
+App.use("/api/lessons", lessonRoutes);
+App.use("/api/languages", languageRoutes);
 
 // Error handling middleware
 App.use((err, req, res, next) => {
