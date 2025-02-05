@@ -36,7 +36,9 @@ module.exports = {
 
   deleteGems: async (req, res) => {
     try {
-      const gem = await Gems.destroy({ where: { gem_id: req.params.gem_id } });
+      const gem = await Gems.destroy({
+        where: { gem_id: req.params.gem_id }
+      });
       res.status(200).json(gem);
     } catch (error) {
       res.status(500).json({ error: error.message });

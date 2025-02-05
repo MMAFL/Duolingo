@@ -4,7 +4,7 @@ const Exercise = db.Exercise;
 module.exports = {
   getExercises: async (req, res) => {
     try {
-      const exercises = await Exercises.findAll();
+      const exercises = await Exercise.findAll();
       res.status(200).json(exercises);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -21,7 +21,7 @@ module.exports = {
         exercise_points,    
       } = req.body;
 
-      const exercise = await Exercises.create({
+      const exercise = await Exercise.create({
         exercise_type,
         exercise_title,
         exercise_description,
@@ -43,7 +43,7 @@ module.exports = {
         exercise_points,
       } = req.body;
 
-      const exercise = await Exercises.update(
+      const exercise = await Exercise.update(
         {
           exercise_type,
           exercise_title,
@@ -60,7 +60,7 @@ module.exports = {
   },
   deleteExercise: async (req, res) => {
     try {
-      const exercise = await Exercises.destroy({
+      const exercise = await Exercise.destroy({
         where: { exercise_id: req.params.exercise_id },
       });
       res.status(200).json(exercise);
