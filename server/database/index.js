@@ -1,63 +1,48 @@
-const  Sequelize = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
+require('dotenv').config();
 
-const Users = require("./models/users");
-const Exercises = require("./models/exercises");
-const Gems = require("./models/gems");
-// const Lesson = require("./models/lessons");
-// const Language = require("./models/languages");
-// const Achievement = require("./models/achievements");
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.USER,
+  process.env.PASSWORD,
+  {
+    host: process.env.HOST,
+    dialect: "mysql",
+    define: {
+      timestamps: false
+    }
+  }
+);
 
-
-// const UserAchievement = require("./models/userAchievements");
-// const Progress = require("./models/progresses");
-// const Question = require("./models/questions");
-
-
-
-// const Choice = require("./models/choices");
-// const LessonsUsers = require("./models/lessonsUsers");
-// const LanguageUsers = require("./models/languageUsers");
-
-// User.belongsToMany(Lesson, { foreignKey: "userId", through: LessonsUsers });
-// Lesson.belongsToMany(User, { foreignKey: "lessonId", through: LessonsUsers });
-
-
-
-
-const sequelize = new Sequelize("duolingo", "root", "root", {
-  host: "localhost",
-  dialect: "mysql", 
-});
-
-
-
-// Sync all models with the database
-sequelize
-  .sync({ force: true , alter: true }) 
+// Test the connection
+sequelize.authenticate()
   .then(() => {
-    console.log("Database synced successfully.");
+    console.log('Connection has been established successfully.');
   })
-
-  .catch((err) => {
-    console.error("Error syncing database:", err);
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
   });
 
-
-
-
-module.exports = {
-  Users,
-  Exercises,
-  Gems,
-  // Language,
-  // Achievement,
-  // UserAchievement,
-  // LessonsUsers,
-  // Progress,
-
-
-  // Question,
-
-  // Choice,
-
+const db = {
+  Sequelize,
+  sequelize,
+  models: {}
 };
+
+// Import models
+db.models.User = require('./models/UserModel')(sequelize, DataTypes);
+db.models.Streak = require('./models/StreakModel')(sequelize, DataTypes);
+
+// Add associations
+db.models.User.hasMany(db.models.Streak, { foreignKey: 'user_id' });
+db.models.Streak.belongsTo(db.models.User, { foreignKey: 'user_id' });
+
+db.sequelize.sync({ force: false, alter: false })
+  .then(() => {
+    console.log('Database synchronized');
+  })
+  .catch((err) => {
+    console.error('Error synchronizing database:', err);
+  });
+
+module.exports = db;

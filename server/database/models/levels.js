@@ -1,3 +1,6 @@
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../index");
+
 const Levels = (sequelize, DataTypes) => {
   const Levels = sequelize.define("levels", {
     level_title: {
@@ -13,7 +16,6 @@ const Levels = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-    
 
   return Levels;
 };
