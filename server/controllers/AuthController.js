@@ -56,12 +56,17 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    const { userId } = req.user;
+    console.log(req.user); // Log the req.user object
+    const userId = req.user.id; // Ensure req.user is populated by the middleware
     const user = await User.findByPk(userId);
-    await user.update({ refresh_token: null });
 
-    res.clearCookie('refreshToken');
-    res.json({ message: 'Logged out successfully' });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    await user.update({ refresh_token: null });
+    res.clearCookie("refreshToken");
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
