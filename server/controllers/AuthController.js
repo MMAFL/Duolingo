@@ -1,6 +1,7 @@
 const db = require('../database');
 const User = db.User;
 const { generateTokens } = require('../utils/authUtils');
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   try {
@@ -40,28 +41,32 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
 
-    const { accessToken, refreshToken } = generateTokens(user);
-    console.log('Generated Tokens:', { accessToken, refreshToken }); // Log tokens
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.user_id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
-    await user.update({ refresh_token: refreshToken });
-    console.log('Refresh Token Stored in Database:', refreshToken); // Log stored token
-
-    res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
-    res.json({ accessToken });
+    res.json({ token });
   } catch (error) {
-    console.error('Login Error:', error); // Log errors
     res.status(500).json({ error: error.message });
   }
 };
 
 exports.logout = async (req, res) => {
   try {
-    const { userId } = req.user;
+    console.log(req.user); // Log the req.user object
+    const userId = req.user.id; // Ensure req.user is populated by the middleware
     const user = await User.findByPk(userId);
-    await user.update({ refresh_token: null });
 
-    res.clearCookie('refreshToken');
-    res.json({ message: 'Logged out successfully' });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    await user.update({ refresh_token: null });
+    res.clearCookie("refreshToken");
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

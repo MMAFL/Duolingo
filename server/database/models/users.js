@@ -8,7 +8,16 @@ module.exports = (sequelize, DataTypes) => {
     user_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     username: { type: DataTypes.STRING, unique: true },
     email: { type: DataTypes.STRING, unique: true },
-    password_hash: { type: DataTypes.STRING },
+    password_hash: { 
+      type: DataTypes.STRING,
+      validate: {
+        isStrongPassword(value) {
+          if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(value)) {
+            throw new Error('Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long.');
+          }
+        }
+      }
+    },
     profile_picture: { type: DataTypes.TEXT },
     xp_points: { type: DataTypes.INTEGER, defaultValue: 0 },
     unlock_points: { type: DataTypes.INTEGER, defaultValue: 0 },
