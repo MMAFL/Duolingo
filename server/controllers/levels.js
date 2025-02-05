@@ -1,5 +1,5 @@
 const db = require("../database");
-const Levels = db.models.Levels;
+const Levels = db.Level;
 
 
 module.exports = {

@@ -1,5 +1,5 @@
 const db = require("../database");
-const Exercises = db.models.Exercises;
+const Exercises = db.Exercise;
 
 module.exports = {
   getExercises: async (req, res) => {
