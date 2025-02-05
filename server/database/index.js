@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-require('dotenv').config();
+require("dotenv").config();
 
 const sequelize = new Sequelize(
   process.env.DATABASE,
@@ -9,40 +9,56 @@ const sequelize = new Sequelize(
     host: process.env.HOST,
     dialect: "mysql",
     define: {
-      timestamps: false
-    }
+      timestamps: false,
+    },
   }
 );
 
 // Test the connection
-sequelize.authenticate()
+sequelize
+  .authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log("Connection has been established successfully.");
   })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
   });
 
 const db = {
   Sequelize,
   sequelize,
-  models: {}
+  models: {},
 };
 
 // Import models
-db.models.User = require('./models/UserModel')(sequelize, DataTypes);
-db.models.Streak = require('./models/StreakModel')(sequelize, DataTypes);
+db.models.User = require("./models/UserModel")(sequelize, DataTypes);
+db.models.Streak = require("./models/StreakModel")(sequelize, DataTypes);
+db.models.Achievement = require("./models/Achievement")(sequelize, DataTypes);
+db.models.UserAchievement = require("./models/UserAchievement")(
+  sequelize,
+  DataTypes
+);
 
 // Add associations
-db.models.User.hasMany(db.models.Streak, { foreignKey: 'user_id' });
-db.models.Streak.belongsTo(db.models.User, { foreignKey: 'user_id' });
+db.models.User.hasMany(db.models.Streak, { foreignKey: "user_id" });
+db.models.Streak.belongsTo(db.models.User, { foreignKey: "user_id" });
 
-// db.sequelize.sync({ force: false, alter: false })
+db.models.User.belongsToMany(db.models.Achievement, {
+  through: db.models.UserAchievement,
+  foreignKey: "user_id",
+});
+db.models.Achievement.belongsToMany(db.models.User, {
+  through: db.models.UserAchievement,
+  foreignKey: "achievement_id",
+});
+
+// db.sequelize
+//   .sync({ force: false, alter: false })
 //   .then(() => {
-//     console.log('Database synchronized');
+//     console.log("Database synchronized");
 //   })
 //   .catch((err) => {
-//     console.error('Error synchronizing database:', err);
+//     console.error("Error synchronizing database:", err);
 //   });
 
 module.exports = db;
