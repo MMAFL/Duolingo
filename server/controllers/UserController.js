@@ -1,6 +1,7 @@
 // controllers/userController.js
 const db = require('../database');
 const User = db.models.User;
+const Leaderboard = db.models.Leaderboard;
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -24,6 +25,12 @@ exports.getUserById = async (req, res) => {
 exports.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
+    // Create leaderboard entry for new user
+    await Leaderboard.create({
+      user_id: user.user_id,
+      xp_points: 0,
+      rank: 0
+    });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });

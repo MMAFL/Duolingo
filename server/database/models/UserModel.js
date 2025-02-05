@@ -20,67 +20,50 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      unique: {
-        msg: 'Email must be unique',
-        args: true,
-        msg: 'Email address already in use!',
-        
-      },
+      unique: true,
       allowNull: false,
-
       validate: {
-        isEmail: {
-          msg: 'Invalid email format'
-        },
-        notEmpty: {
-          msg: 'Email is required'
-        }
+        isEmail: true,
+        notEmpty: true
       }
     },
     password_hash: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: 'Password is required'
-        },
-        isStrongPassword(value) {
-          if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(value)) {
-            throw new Error('Password must be at least 8 characters long and include uppercase, lowercase, and a number');
-          }
-        }
+        notEmpty: true
       }
     },
-    profile_picture: { 
-      type: DataTypes.TEXT 
+    profile_picture: {
+      type: DataTypes.TEXT
     },
-    xp_points: { 
-      type: DataTypes.INTEGER, 
-      defaultValue: 0 
+    xp_points: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
-    unlock_points: { 
-      type: DataTypes.INTEGER, 
-      defaultValue: 0 
+    unlock_points: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
-    hearts: { 
-      type: DataTypes.INTEGER, 
-      defaultValue: 5 
+    hearts: {
+      type: DataTypes.INTEGER,
+      defaultValue: 5
     },
-    gems: { 
-      type: DataTypes.INTEGER, 
-      defaultValue: 0 
+    gems: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
-    streak_days: { 
-      type: DataTypes.INTEGER, 
-      defaultValue: 0 
+    streak_days: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
-    created_at: { 
-      type: DataTypes.DATE, 
-      defaultValue: DataTypes.NOW 
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
-    updated_at: { 
-      type: DataTypes.DATE, 
-      defaultValue: DataTypes.NOW 
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
     refresh_token: {
       type: DataTypes.STRING
