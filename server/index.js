@@ -12,12 +12,19 @@ const authRoutes = require('./routes/AuthRoute');
 const lessonRoutes = require('./routes/LessonRoute');
 const languageRoutes = require('./routes/LanguageRoute');
 const achievementRoutes = require("./routes/achievementRoutes");
+const userRoutes = require('./routes/UsersRoute');
+const streakRoutes = require('./routes/StreakRoute');
+const lessonRoutes = require('./routes/LessonRoute');
+const languageRoutes = require('./routes/LanguageRoute');
+const exercisesRoutes = require('./routes/exercises');
+const gemsRoutes = require('./routes/gems');
+const levelsRoutes = require('./routes/levels');
 
 // Middleware
 App.use(cors()); // Update with your frontend URL
 App.use(express.json());
 App.use(express.urlencoded({ extended: true }));
-App.use(cookieParser());
+
 
 // Health check endpoint
 App.get("/api/health", (req, res) => {
@@ -25,11 +32,19 @@ App.get("/api/health", (req, res) => {
 });
 
 // Mount routes
-App.use('/api/auth', authRoutes);
+App.use("/api/users", userRoutes);
+App.use("/api/streaks", streakRoutes);
+App.use("/api/lessons", lessonRoutes);
+App.use("/api/languages", languageRoutes);
 App.use('/api/users', userRoutes);
 App.use('/api/streaks', streakRoutes);
 App.use('/api/lessons', lessonRoutes);
 App.use('/api/languages', languageRoutes);
+App.use('/api/exercises', exercisesRoutes);
+App.use('/api/gems', gemsRoutes);
+App.use('/api/levels', levelsRoutes);
+
+
 
 // Error handling middleware
 App.use((err, req, res, next) => {
