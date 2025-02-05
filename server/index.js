@@ -5,18 +5,14 @@ const cors = require("cors");
 const db = require("./database/index.js");
 
 // Import routes
-const userRoutes = require("./routes/UsersRoute");
-const streakRoutes = require("./routes/StreakRoute");
-const lessonRoutes = require("./routes/LessonRoute");
-const languageRoutes = require("./routes/LanguageRoute");
-const achievementRoutes = require("./routes/achievementRoutes");
-const userRoutes = require('./routes/UsersRoute');
-const streakRoutes = require('./routes/StreakRoute');
-const lessonRoutes = require('./routes/LessonRoute');
-const languageRoutes = require('./routes/LanguageRoute');
-const exercisesRoutes = require('./routes/exercises');
-const gemsRoutes = require('./routes/gems');
-const levelsRoutes = require('./routes/levels');
+// const userRoutes = require("./routes/UsersRoute");
+// const streakRoutes = require("./routes/StreakRoute");
+// const lessonRoutes = require("./routes/LessonRoute");
+// const languageRoutes = require("./routes/LanguageRoute");
+// const achievementRoutes = require("./routes/achievementRoutes");
+// const exercisesRoutes = require('./routes/exercises');
+// const gemsRoutes = require('./routes/gems');
+// const levelsRoutes = require('./routes/levels');
 
 // Middleware
 App.use(cors());
@@ -29,18 +25,18 @@ App.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Server is running" });
 });
 
-// Mount routes
-App.use("/api/users", userRoutes);
-App.use("/api/streaks", streakRoutes);
-App.use("/api/lessons", lessonRoutes);
-App.use("/api/languages", languageRoutes);
-App.use('/api/users', userRoutes);
-App.use('/api/streaks', streakRoutes);
-App.use('/api/lessons', lessonRoutes);
-App.use('/api/languages', languageRoutes);
-App.use('/api/exercises', exercisesRoutes);
-App.use('/api/gems', gemsRoutes);
-App.use('/api/levels', levelsRoutes);
+// // Mount routes
+// App.use("/api/users", userRoutes);
+// App.use("/api/streaks", streakRoutes);
+// App.use("/api/lessons", lessonRoutes);
+// App.use("/api/languages", languageRoutes);
+// App.use('/api/users', userRoutes);
+// App.use('/api/streaks', streakRoutes);
+// // App.use('/api/lessons', lessonRoutes);
+// // App.use('/api/languages', languageRoutes);
+// App.use('/api/exercises', exercisesRoutes);
+// App.use('/api/gems', gemsRoutes);
+// App.use('/api/levels', levelsRoutes);
 
 
 

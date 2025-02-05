@@ -1,25 +1,12 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../index");
+module.exports = (sequelize, DataTypes) => {
+  const Gems = sequelize.define('Gems', {
+    gem_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER },
+    gem_balance: { type: DataTypes.INTEGER, defaultValue: 0 }
+  }, { timestamps: false });
 
-const Gems = (sequelize, DataTypes) => {
-  const Gems = sequelize.define("gems", {
-    gem_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    gem_balance: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-      allowNull: false,
-    },
-  });
+  // Relationships
+  // Gems.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
 
   return Gems;
 };
-
-module.exports = Gems;

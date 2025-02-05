@@ -1,30 +1,13 @@
-// models/Streak.js
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../index');
-
 module.exports = (sequelize, DataTypes) => {
   const Streak = sequelize.define('Streak', {
-    streak_id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    streak_count: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    last_active_date: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    }
-  }, {
-    timestamps: false,
-    tableName: 'Streaks'
-  });
+    streak_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    user_id: { type: DataTypes.INTEGER },
+    streak_count: { type: DataTypes.INTEGER },
+    last_active_date: { type: DataTypes.DATE }
+  }, { timestamps: false });
+
+  // Relationships
+  // Streak.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
 
   return Streak;
 };

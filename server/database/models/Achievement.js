@@ -1,29 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
-  const Achievement = sequelize.define(
-    "Achievement",
-    {
-      achievement_id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      xp_reward: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    },
-    {
-      tableName: "achievements",
-      timestamps: false,
-    }
-  );
+  const Achievement = sequelize.define('Achievement', {
+    achievement_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    title: { type: DataTypes.STRING },
+    description: { type: DataTypes.TEXT },
+    xp_reward: { type: DataTypes.INTEGER }
+  }, { timestamps: false });
+
+  // Relationships
+  // Achievement.belongsToMany(sequelize.models.User, { through: sequelize.models.UserAchievement, foreignKey: 'achievement_id' });
+
   return Achievement;
 };
