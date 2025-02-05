@@ -1,23 +1,24 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../index");
 
-const Levels = (sequelize, DataTypes) => {
-  const Levels = sequelize.define("levels", {
-    level_title: {
+module.exports = (sequelize, DataTypes) => {
+  const Level = sequelize.define("Level", {
+    level_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    level_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    unclock_points_required: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+    level_description: {
+      type: DataTypes.TEXT,
     },
-    xp_reward: {
+    level_points_required: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue: 0,
     },
   });
 
-  return Levels;
+  return Level;
 };
-
-module.exports = Levels;

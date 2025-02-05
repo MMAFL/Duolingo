@@ -1,5 +1,5 @@
 const db = require("../database");
-const { User, Achievement, UserAchievement } = db.models;
+const { User, Achievement, UserAchievement } = db;
 
 // Fetch all achievements
 const getAllAchievements = async (req, res) => {

@@ -26,39 +26,59 @@ sequelize
 
 const db = {
   Sequelize,
-  sequelize,
-  models: {},
+  sequelize
 };
 
-// Import models
-db.models.User = require("./models/UserModel")(sequelize, DataTypes);
-db.models.Streak = require("./models/StreakModel")(sequelize, DataTypes);
-db.models.Achievement = require("./models/Achievement")(sequelize, DataTypes);
-db.models.UserAchievement = require("./models/UserAchievement")(
-  sequelize,
-  DataTypes
-);
+// Import models and assign directly to db object
+db.User = require("./models/users")(sequelize, DataTypes);
+db.Streak = require("./models/streaks")(sequelize, DataTypes);
+db.Achievement = require("./models/achievements")(sequelize, DataTypes);
+db.UserAchievement = require("./models/userAchievements")(sequelize, DataTypes);
+db.Language = require("./models/languages")(sequelize, DataTypes);
+db.UserLanguage = require("./models/userlanguages")(sequelize, DataTypes);
+db.Level = require("./models/levels")(sequelize, DataTypes);
+db.Lesson = require("./models/lessons")(sequelize, DataTypes);
+db.Quiz = require("./models/quizzes")(sequelize, DataTypes);
+db.UserProgress = require("./models/userProgresses")(sequelize, DataTypes);
 
-// Add associations
-db.models.User.hasMany(db.models.Streak, { foreignKey: "user_id" });
-db.models.Streak.belongsTo(db.models.User, { foreignKey: "user_id" });
+// Import new models
+db.Exercise = require("./models/exercises")(sequelize, DataTypes);
+db.Hearts = require("./models/hearts")(sequelize, DataTypes);
+db.Gems = require("./models/gems")(sequelize, DataTypes);
 
-db.models.User.belongsToMany(db.models.Achievement, {
-  through: db.models.UserAchievement,
+// Define relationships
+
+// User relationships
+db.User.hasMany(db.UserProgress, { foreignKey: "user_id" });
+db.User.hasOne(db.Hearts, { foreignKey: "user_id" });
+db.User.hasOne(db.Streak, { foreignKey: "user_id" });
+db.User.belongsToMany(db.Achievement, {
+  through: db.UserAchievement,
   foreignKey: "user_id",
 });
-db.models.Achievement.belongsToMany(db.models.User, {
-  through: db.models.UserAchievement,
-  foreignKey: "achievement_id",
+db.User.belongsToMany(db.Language, {
+  through: db.UserLanguage, // Corrected this line
+  foreignKey: "user_id",
 });
 
-// db.sequelize
-//   .sync({ force: false, alter: false })
-//   .then(() => {
-//     console.log("Database synchronized");
-//   })
-//   .catch((err) => {
-//     console.error("Error synchronizing database:", err);
-//   });
+// Language relationships
+db.Language.hasMany(db.Level, { foreignKey: "language_id" });
+db.Language.belongsToMany(db.User, {
+  through: db.UserLanguage, // Corrected this line
+  foreignKey: "language_id",
+});
+
+// UserLanguage relationships
+db.UserLanguage.belongsTo(db.User, { foreignKey: "user_id" });
+db.UserLanguage.belongsTo(db.Language, { foreignKey: "language_id" });
+
+// Sync the database (force: true will drop and recreate tables)
+sequelize.sync({ force: true })
+  .then(() => {
+    console.log("Database synced successfully.");
+  })
+  .catch((err) => {
+    console.error("Error syncing database:", err);
+  });
 
 module.exports = db;

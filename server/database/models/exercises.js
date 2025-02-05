@@ -1,31 +1,13 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../index");
-
-const Exercises = (sequelize, DataTypes) => {
-  const Exercise = sequelize.define("exercises", {
-    exercise_type: {
-      type: DataTypes.ENUM("Multiple Choice", "Fill in the blank", "Speech"),
-      allowNull: false,
-    },
-    exercise_title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    exercise_description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    exercise_image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    exercise_points: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+module.exports = (sequelize, DataTypes) => {
+  const Exercise = sequelize.define('Exercise', {
+    exercise_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    lesson_id: { type: DataTypes.INTEGER },
+    exercise_type: { type: DataTypes.ENUM('Multiple Choice', 'Fill in the Blank', 'Speech') },
+    question_text: { type: DataTypes.TEXT },
+    correct_answer: { type: DataTypes.TEXT },
+    options: { type: DataTypes.JSON },
+    created_at: { type: DataTypes.DATE }
+  }, { timestamps: false });
 
   return Exercise;
 };
-
-module.exports = Exercises;

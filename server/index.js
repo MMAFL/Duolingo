@@ -1,55 +1,36 @@
 const express = require("express");
-const App = express();
-const port = 4000;
+const app = express();
+const port = 5000;
 const cors = require("cors");
-const db = require("./database/index.js");
 
 // Import routes
-const userRoutes = require("./routes/UsersRoute");
-const streakRoutes = require("./routes/StreakRoute");
-const lessonRoutes = require("./routes/LessonRoute");
-const languageRoutes = require("./routes/LanguageRoute");
-const achievementRoutes = require("./routes/achievementRoutes");
-const userRoutes = require('./routes/UsersRoute');
-const streakRoutes = require('./routes/StreakRoute');
-const lessonRoutes = require('./routes/LessonRoute');
-const languageRoutes = require('./routes/LanguageRoute');
-const exercisesRoutes = require('./routes/exercises');
-const gemsRoutes = require('./routes/gems');
-const levelsRoutes = require('./routes/levels');
+const userRoute = require("./routes/usersRoute");
+const streakRoute = require("./routes/streaksRoute");
+const lessonRoute = require("./routes/lessonsRoute");
+const languageRoute = require("./routes/languagesRoute");
+const achievementRoute = require("./routes/achievementsRoute");
+const exercisesRoute = require('./routes/exercisesRoute');
+const gemsRoute = require('./routes/gemsRoute');
+const levelsRoute = require('./routes/levelsRoute');
+const authsRoute = require("./routes/authsRoute")
 
 // Middleware
-App.use(cors());
-App.use(express.json());
-App.use(express.urlencoded({ extended: true }));
-
-
-// Health check endpoint
-App.get("/api/health", (req, res) => {
-  res.json({ status: "ok", message: "Server is running" });
-});
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Mount routes
-App.use("/api/users", userRoutes);
-App.use("/api/streaks", streakRoutes);
-App.use("/api/lessons", lessonRoutes);
-App.use("/api/languages", languageRoutes);
-App.use('/api/users', userRoutes);
-App.use('/api/streaks', streakRoutes);
-App.use('/api/lessons', lessonRoutes);
-App.use('/api/languages', languageRoutes);
-App.use('/api/exercises', exercisesRoutes);
-App.use('/api/gems', gemsRoutes);
-App.use('/api/levels', levelsRoutes);
+app.use("/api/users", userRoute);
+app.use("/api/streaks", streakRoute);
+app.use("/api/lessons", lessonRoute);
+app.use("/api/languages", languageRoute);
+app.use('/api/streaks', streakRoute);
+app.use('/api/exercises', exercisesRoute);
+app.use('/api/gems', gemsRoute);
+app.use('/api/levels', levelsRoute);
+app.use('/api/achievements', achievementRoute);
+app.use("/api/auth",authsRoute)
 
-
-
-// Error handling middleware
-App.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
-});
-
-App.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
