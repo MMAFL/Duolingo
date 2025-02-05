@@ -6,8 +6,5 @@ module.exports = (sequelize, DataTypes) => {
     last_recharge: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // Hearts.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
-
   return Hearts;
 };

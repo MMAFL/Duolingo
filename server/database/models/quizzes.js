@@ -6,8 +6,5 @@ module.exports = (sequelize, DataTypes) => {
     created_at: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // Quiz.belongsTo(sequelize.models.Level, { foreignKey: 'level_id' });
-
   return Quiz;
 };

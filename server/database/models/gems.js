@@ -5,8 +5,5 @@ module.exports = (sequelize, DataTypes) => {
     gem_balance: { type: DataTypes.INTEGER, defaultValue: 0 }
   }, { timestamps: false });
 
-  // Relationships
-  // Gems.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
-
   return Gems;
 };

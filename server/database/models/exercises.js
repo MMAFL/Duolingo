@@ -9,8 +9,5 @@ module.exports = (sequelize, DataTypes) => {
     created_at: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // Exercise.belongsTo(sequelize.models.Lesson, { foreignKey: 'lesson_id' });
-
   return Exercise;
 };

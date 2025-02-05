@@ -5,9 +5,5 @@ module.exports = (sequelize, DataTypes) => {
     earned_date: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // UserAchievement.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
-  // UserAchievement.belongsTo(sequelize.models.Achievement, { foreignKey: 'achievement_id' });
-
   return UserAchievement;
 };
