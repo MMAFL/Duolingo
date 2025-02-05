@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     streak_days: { type: DataTypes.INTEGER, defaultValue: 0 },
     created_at: { type: DataTypes.DATE },
     updated_at: { type: DataTypes.DATE }
-  }, { timestamps: false;
+  }, { timestamps: false,
     tableName: 'Users',
     hooks: {
       beforeCreate: async (user) => {
@@ -41,4 +41,4 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return User;
-
+}

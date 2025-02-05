@@ -6,8 +6,5 @@ module.exports = (sequelize, DataTypes) => {
     xp_reward: { type: DataTypes.INTEGER }
   }, { timestamps: false });
 
-  // Relationships
-  // Achievement.belongsToMany(sequelize.models.User, { through: sequelize.models.UserAchievement, foreignKey: 'achievement_id' });
-
   return Achievement;
 };

@@ -5,9 +5,5 @@ module.exports = (sequelize, DataTypes) => {
     learning_progress: { type: DataTypes.INTEGER, defaultValue: 0 }
   }, { timestamps: false });
 
-  // Relationships
-  // UserLanguages.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
-  // UserLanguages.belongsTo(sequelize.models.Language, { foreignKey: 'language_id' });
-
   return UserLanguages;
 };

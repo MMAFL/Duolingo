@@ -1,5 +1,5 @@
 const db = require('../database');
-const User = db.models.User;
+const User = db.User;
 const { generateTokens } = require('../utils/authUtils');
 
 exports.register = async (req, res) => {
