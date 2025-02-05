@@ -7,10 +7,5 @@ module.exports = (sequelize, DataTypes) => {
     created_at: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // Lesson.belongsTo(sequelize.models.Level, { foreignKey: 'level_id' });
-  // Lesson.hasMany(sequelize.models.Exercise, { foreignKey: 'lesson_id' });
-  // Lesson.belongsToMany(sequelize.models.User, { through: sequelize.models.UserProgress, foreignKey: 'lesson_id' });
-
   return Lesson;
 };

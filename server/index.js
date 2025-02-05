@@ -1,35 +1,36 @@
 const express = require("express");
-const App = express();
+const app = express();
 const port = 5000;
 const cors = require("cors");
 
 // Import routes
-const userRoutes = require("./routes/usersRoute");
-const streakRoutes = require("./routes/streaksRoute");
-const lessonRoutes = require("./routes/lessonsRoute");
-const languageRoutes = require("./routes/languagesRoute");
-const achievementRoutes = require("./routes/achievementsRoute");
-const exercisesRoutes = require('./routes/exercisesroute');
-const gemsRoutes = require('./routes/gemsRoute');
-const levelsRoutes = require('./routes/levelsRoute');
+const userRoute = require("./routes/usersRoute");
+const streakRoute = require("./routes/streaksRoute");
+const lessonRoute = require("./routes/lessonsRoute");
+const languageRoute = require("./routes/languagesRoute");
+const achievementRoute = require("./routes/achievementsRoute");
+const exercisesRoute = require('./routes/exercisesRoute');
+const gemsRoute = require('./routes/gemsRoute');
+const levelsRoute = require('./routes/levelsRoute');
+const authsRoute = require("./routes/authsRoute")
 
 // Middleware
-App.use(cors());
-App.use(express.json());
-App.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Mount routes
-App.use("/api/users", userRoutes);
-App.use("/api/streaks", streakRoutes);
-App.use("/api/lessons", lessonRoutes);
-App.use("/api/languages", languageRoutes);
-App.use('/api/streaks', streakRoutes);
-App.use('/api/exercises', exercisesRoutes);
-App.use('/api/gems', gemsRoutes);
-App.use('/api/levels', levelsRoutes);
-App.use('/api/achievements', achievementRoutes);
+app.use("/api/users", userRoute);
+app.use("/api/streaks", streakRoute);
+app.use("/api/lessons", lessonRoute);
+app.use("/api/languages", languageRoute);
+app.use('/api/streaks', streakRoute);
+app.use('/api/exercises', exercisesRoute);
+app.use('/api/gems', gemsRoute);
+app.use('/api/levels', levelsRoute);
+app.use('/api/achievements', achievementRoute);
+app.use("/api/auth",authsRoute)
 
-
-App.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

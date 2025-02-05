@@ -6,8 +6,5 @@ module.exports = (sequelize, DataTypes) => {
     last_active_date: { type: DataTypes.DATE }
   }, { timestamps: false });
 
-  // Relationships
-  // Streak.belongsTo(sequelize.models.User, { foreignKey: 'user_id' });
-
   return Streak;
 };
