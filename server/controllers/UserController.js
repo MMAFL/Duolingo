@@ -1,6 +1,13 @@
+<<<<<<< HEAD
+// controllers/userController.js
+const db = require('../database');
+const User = db.models.User;
+const Leaderboard = db.models.Leaderboard;
+=======
 // // controllers/userController.js
 // const db = require('../database');
 // const User = db.models.User;
+>>>>>>> a395a44f0e03a6cf63ee19d32beb9faec61eeffb
 
 // exports.getAllUsers = async (req, res) => {
 //   try {
@@ -21,6 +28,22 @@
 //   }
 // };
 
+<<<<<<< HEAD
+exports.createUser = async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    // Create leaderboard entry for new user
+    await Leaderboard.create({
+      user_id: user.user_id,
+      xp_points: 0,
+      rank: 0
+    });
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+=======
 // exports.createUser = async (req, res) => {
 //   try {
 //     const user = await User.create(req.body);
@@ -29,6 +52,7 @@
 //     res.status(500).json({ error: error.message });
 //   }
 // };
+>>>>>>> a395a44f0e03a6cf63ee19d32beb9faec61eeffb
 
 // exports.updateUser = async (req, res) => {
 //   try {

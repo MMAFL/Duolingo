@@ -2,7 +2,6 @@ const express = require("express");
 const App = express();
 const port = 4000;
 const cors = require("cors");
-const db = require("./database/index.js");
 
 // Import routes
 // const userRoutes = require("./routes/UsersRoute");

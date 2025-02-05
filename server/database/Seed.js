@@ -16,7 +16,7 @@ const {
   // Streak
 } = require("./index");
 const db = require("./index");
-const { User, Achievement, UserAchievement } = db.models;
+const { User, Achievement, UserAchievement, Leaderboard } = db.models;
 
 async function seed() {
   try {
@@ -146,14 +146,22 @@ async function seed() {
     //   { ignoreDuplicates: true }
     // );
 
-    // // 11. Leaderboards (ranks users based on XP points)
-    // await Leaderboard.bulkCreate(
-    //   [
-    //     { user_id: 1, xp_points: 150, rank: 1 },
-    //     { user_id: 2, xp_points: 120, rank: 2 }
-    //   ],
-    //   { ignoreDuplicates: true }
-    // );
+    // 11. Leaderboards (ranks users based on XP points)
+    await Leaderboard.bulkCreate(
+      [
+        {
+          user_id: 1,
+          xp_points: 150,
+          rank: 1
+        },
+        {
+          user_id: 2,
+          xp_points: 120,
+          rank: 2
+        }
+      ],
+      { ignoreDuplicates: true }
+    );
 
     // 12. Achievements
     await Achievement.bulkCreate(
