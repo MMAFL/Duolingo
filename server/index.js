@@ -3,15 +3,18 @@ const App = express();
 const port = 4000;
 const cors = require("cors");
 const db = require("./database/index.js");
+const cookieParser = require('cookie-parser');
 
 // Import routes
 const userRoutes = require('./routes/UsersRoute');
 const streakRoutes = require('./routes/StreakRoute');
+const authRoutes = require('./routes/AuthRoute');
 
 // Middleware
-App.use(cors());
+App.use(cors()); // Update with your frontend URL
 App.use(express.json());
 App.use(express.urlencoded({ extended: true }));
+App.use(cookieParser());
 
 // Health check endpoint
 App.get('/api/health', (req, res) => {
@@ -19,6 +22,7 @@ App.get('/api/health', (req, res) => {
 });
 
 // Mount routes
+App.use('/api/auth', authRoutes);
 App.use('/api/users', userRoutes);
 App.use('/api/streaks', streakRoutes);
 
