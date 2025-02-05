@@ -1,23 +1,18 @@
-const { DataTypes } = require("sequelize");
-const { sequelize } = require("../index");
+module.exports = (sequelize, DataTypes) => {
+  const Level = sequelize.define('Level', {
+    level_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    language_id: { type: DataTypes.INTEGER },
+    level_title: { type: DataTypes.STRING },
+    unlock_points_required: { type: DataTypes.INTEGER },
+    xp_reward: { type: DataTypes.INTEGER },
+    created_at: { type: DataTypes.DATE }
+  }, { timestamps: false });
 
-const Levels = (sequelize, DataTypes) => {
-  const Levels = sequelize.define("levels", {
-    level_title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    unclock_points_required: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    xp_reward: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+  // Relationships
+  // Level.belongsTo(sequelize.models.Language, { foreignKey: 'language_id' });
+  // Level.hasMany(sequelize.models.Lesson, { foreignKey: 'level_id' });
+  // Level.hasOne(sequelize.models.Quiz, { foreignKey: 'level_id' });
+  // Level.belongsToMany(sequelize.models.User, { through: sequelize.models.UserProgress, foreignKey: 'level_id' });
 
-  return Levels;
+  return Level;
 };
-
-module.exports = Levels;

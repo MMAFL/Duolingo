@@ -47,10 +47,12 @@ db.models.Exercise = require("./models/exercises")(sequelize, DataTypes);
 db.models.Hearts = require("./models/hearts")(sequelize, DataTypes);
 db.models.Gems = require("./models/gems")(sequelize, DataTypes);
 
-// Add associations
+// Define relationships
+
 // User relationships
-db.models.User.hasMany(db.models.Streak, { foreignKey: "user_id" });
 db.models.User.hasMany(db.models.UserProgress, { foreignKey: "user_id" });
+db.models.User.hasOne(db.models.Hearts, { foreignKey: "user_id" });
+db.models.User.hasOne(db.models.Streak, { foreignKey: "user_id" });
 db.models.User.belongsToMany(db.models.Achievement, {
   through: db.models.UserAchievement,
   foreignKey: "user_id",
@@ -59,8 +61,6 @@ db.models.User.belongsToMany(db.models.Language, {
   through: db.models.UserLanguages,
   foreignKey: "user_id",
 });
-db.models.User.hasOne(db.models.Hearts, { foreignKey: "user_id" });
-db.models.User.hasOne(db.models.Gems, { foreignKey: "user_id" });
 
 // Language relationships
 db.models.Language.hasMany(db.models.Level, { foreignKey: "language_id" });
@@ -68,6 +68,10 @@ db.models.Language.belongsToMany(db.models.User, {
   through: db.models.UserLanguages,
   foreignKey: "language_id",
 });
+
+// UserLanguages relationships
+db.models.UserLanguages.belongsTo(db.models.User, { foreignKey: "user_id" });
+db.models.UserLanguages.belongsTo(db.models.Language, { foreignKey: "language_id" });
 
 // Level relationships
 db.models.Level.belongsTo(db.models.Language, { foreignKey: "language_id" });
@@ -80,11 +84,14 @@ db.models.Level.belongsToMany(db.models.User, {
 
 // Lesson relationships
 db.models.Lesson.belongsTo(db.models.Level, { foreignKey: "level_id" });
+db.models.Lesson.hasMany(db.models.Exercise, { foreignKey: "lesson_id" });
 db.models.Lesson.belongsToMany(db.models.User, {
   through: db.models.UserProgress,
   foreignKey: "lesson_id",
 });
-db.models.Lesson.hasMany(db.models.Exercise, { foreignKey: "lesson_id" });
+
+// Exercise relationships
+db.models.Exercise.belongsTo(db.models.Lesson, { foreignKey: "lesson_id" });
 
 // Quiz relationships
 db.models.Quiz.belongsTo(db.models.Level, { foreignKey: "level_id" });
@@ -94,8 +101,11 @@ db.models.UserProgress.belongsTo(db.models.User, { foreignKey: "user_id" });
 db.models.UserProgress.belongsTo(db.models.Level, { foreignKey: "level_id" });
 db.models.UserProgress.belongsTo(db.models.Lesson, { foreignKey: "lesson_id" });
 
-// Streak relationships
-db.models.Streak.belongsTo(db.models.User, { foreignKey: "user_id" });
+// Hearts relationships
+db.models.Hearts.belongsTo(db.models.User, { foreignKey: "user_id" });
+
+// Gems relationships
+db.models.Gems.belongsTo(db.models.User, { foreignKey: "user_id" });
 
 // Achievement relationships
 db.models.Achievement.belongsToMany(db.models.User, {
@@ -103,26 +113,7 @@ db.models.Achievement.belongsToMany(db.models.User, {
   foreignKey: "achievement_id",
 });
 
-// UserLanguages relationships
-db.models.UserLanguages.belongsTo(db.models.User, { foreignKey: "user_id" });
-db.models.UserLanguages.belongsTo(db.models.Language, { foreignKey: "language_id" });
-
-// Hearts relationships
-db.models.Hearts.belongsTo(db.models.User, { foreignKey: "user_id" });
-
-// Gems relationships
-db.models.Gems.belongsTo(db.models.User, { foreignKey: "user_id" });
-
-// Exercise relationships
-db.models.Exercise.belongsTo(db.models.Lesson, { foreignKey: "lesson_id" });
-
-// db.sequelize
-//   .sync({ force: false, alter: false })
-//   .then(() => {
-//     console.log("Database synchronized");
-//   })
-//   .catch((err) => {
-//     console.error("Error synchronizing database:", err);
-//   });
+// Streak relationships
+db.models.Streak.belongsTo(db.models.User, { foreignKey: "user_id" });
 
 module.exports = db;

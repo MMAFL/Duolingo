@@ -1,23 +1,16 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../index');
+module.exports = (sequelize, DataTypes) => {
+  const Lesson = sequelize.define('Lesson', {
+    lesson_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    level_id: { type: DataTypes.INTEGER },
+    lesson_title: { type: DataTypes.STRING },
+    lesson_description: { type: DataTypes.TEXT },
+    created_at: { type: DataTypes.DATE }
+  }, { timestamps: false });
 
-module.exports = function(sequelize, DataTypes) {
-    const Lesson = sequelize.define('Lesson', {
-      lesson_title: {
-        type: DataTypes.STRING, // VARCHAR equivalent in Sequelize
-        allowNull: false
-      },
-      lesson_description: {
-        type: DataTypes.TEXT, // TEXT type for longer descriptions
-        allowNull: true // Optional field
-      },
-      created_at: {
-        type: DataTypes.DATE, // DATETIME equivalent in Sequelize
-        defaultValue: DataTypes.NOW // Default to the current timestamp
-      }
-    }, {
-      timestamps: false // Disable Sequelize's default createdAt and updatedAt fields
-    });
-  
-    return Lesson;
-  };
+  // Relationships
+  // Lesson.belongsTo(sequelize.models.Level, { foreignKey: 'level_id' });
+  // Lesson.hasMany(sequelize.models.Exercise, { foreignKey: 'lesson_id' });
+  // Lesson.belongsToMany(sequelize.models.User, { through: sequelize.models.UserProgress, foreignKey: 'lesson_id' });
+
+  return Lesson;
+};

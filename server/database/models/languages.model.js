@@ -1,17 +1,12 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../index');
-
 module.exports = (sequelize, DataTypes) => {
-    const Language = sequelize.define('Language', {
-      language_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      }
-    }, {
-      timestamps: false // Disable createdAt and updatedAt fields
-    });
-  
-    return Language;
-  };
-  
+  const Language = sequelize.define('Language', {
+    language_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    language_name: { type: DataTypes.STRING }
+  }, { timestamps: false });
+
+  // Relationships
+  // Language.hasMany(sequelize.models.Level, { foreignKey: 'language_id' });
+  // Language.belongsToMany(sequelize.models.User, { through: sequelize.models.UserLanguages, foreignKey: 'language_id' });
+
+  return Language;
+};
