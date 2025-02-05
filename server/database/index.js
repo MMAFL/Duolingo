@@ -26,7 +26,7 @@ sequelize
 
 const db = {
   Sequelize,
-  sequelize
+  sequelize,
 };
 
 // Import models and assign directly to db object
