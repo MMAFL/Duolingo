@@ -16,9 +16,7 @@ const LanguageController = {
     // Allow a user to start learning a language
     async addUserLanguage(req, res) {
         const { languageId } = req.body;
-        const userId = req.user.id; // Assuming user is authenticated
-
-       
+        const userId = req.user.id; // Ensure req.user is populated by the middleware
 
         try {
             // Check if language exists
@@ -30,9 +28,9 @@ const LanguageController = {
             // Check if user already has this language
             const existingAssociation = await UserLanguages.findOne({
                 where: {
-                    UserId: userId,
-                    LanguageId: languageId
-                }
+                    user_id: userId,
+                    language_id: languageId,
+                },
             });
 
             if (existingAssociation) {
@@ -41,9 +39,9 @@ const LanguageController = {
 
             // Create new association
             const userLanguage = await UserLanguages.create({
-                UserId: userId,
-                LanguageId: languageId,
-                learning_progress: 0
+                user_id: userId,
+                language_id: languageId,
+                learning_progress: 0,
             });
 
             res.status(201).json(userLanguage);

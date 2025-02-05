@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const gems = require('../controllers/gemsController');
+const gemsController = require('../controllers/gemsController');
 
-router.get('/', gems.getGems);
-router.post('/', gems.addGems);
-router.put('/:id', gems.updateGems);
-router.delete('/:id', gems.deleteGems);
+router.get('/', gemsController.getGems);
+router.post('/', gemsController.addGems);
+router.put('/:gem_id', gemsController.updateGems);
+router.delete('/:gem_id', gemsController.deleteGems);
 
 module.exports = router;

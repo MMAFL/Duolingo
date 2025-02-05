@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const levels = require('../controllers/levelsController');
+const levelsController = require('../controllers/levelsController');
 
-router.get('/', levels.getLevels);
-router.post('/', levels.createLevel);
-router.put('/:id', levels.updateLevel);
-router.delete('/:id', levels.deleteLevel);
+router.get('/', levelsController.getLevels);
+router.post('/', levelsController.createLevel);
+router.put('/:level_id', levelsController.updateLevel);
+router.delete('/:level_id', levelsController.deleteLevel);
 
 module.exports = router;
