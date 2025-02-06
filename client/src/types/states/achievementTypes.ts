@@ -1,10 +1,9 @@
-// src/types/achievementTypes.ts
-
+// types/states/achievementTypes.ts
 export interface Achievement {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  reward: number;  // Assuming reward is a number (XP)
+  reward: number;
 }
 
 export interface AchievementState {
@@ -12,3 +11,13 @@ export interface AchievementState {
   loading: boolean;
   error: string | null;
 }
+
+export const FETCH_ALL_ACHIEVEMENTS = 'FETCH_ALL_ACHIEVEMENTS';
+
+interface FetchAllAchievementsAction {
+  type: typeof FETCH_ALL_ACHIEVEMENTS;
+  payload: Achievement[];
+  
+}
+
+export type AchievementActionTypes = FetchAllAchievementsAction;

@@ -1,14 +1,24 @@
-// components/AllAchievements.js
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllAchievements } from '../types/states/achievementTypes';
+import { fetchAllAchievements } from '../store/reducers/achievementSlice'; // Correct import
+import { RootState } from '../store'; // Correct import for RootState
+import { ThunkDispatch } from '@reduxjs/toolkit'; // For typing dispatch
 
-const AllAchievements = () => {
-  const dispatch = useDispatch();
-  const { allAchievements, loading, error } = useSelector((state) => state.achievement);
+// Define the Achievement type (if not already defined)
+interface Achievement {
+  id: number;
+  name: string;
+}
+
+const AchievementList = () => {
+  // Typing dispatch for async thunks
+  const dispatch = useDispatch<ThunkDispatch<RootState, void, any>>();
+
+  // Typing the state using RootState
+  const { achievements, loading, error } = useSelector((state: RootState) => state.achievement);
 
   useEffect(() => {
-    dispatch(fetchAllAchievements());
+    dispatch(fetchAllAchievements()); // Dispatch the thunk
   }, [dispatch]);
 
   if (loading) return <p>Loading...</p>;
@@ -16,16 +26,14 @@ const AllAchievements = () => {
 
   return (
     <div>
-      <h2>All Achievements</h2>
-      {allAchievements.map((achievement) => (
-        <div key={achievement.id}>
-          <h3>{achievement.name}</h3>
-          <p>{achievement.description}</p>
-          <p>Reward: {achievement.reward} XP</p>
-        </div>
-      ))}
+      <h1>Achievements</h1>
+      <ul>
+        {achievements.map((achievement: Achievement) => (
+          <li key={achievement.id}>{achievement.name}</li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default AllAchievements;
+export default AchievementList;

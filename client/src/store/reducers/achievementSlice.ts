@@ -1,61 +1,26 @@
-// slices/achievementSlice.ts
+// actions/achievementActions.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
 // Define the initial state
 const initialState = {
-  allAchievements: [], // All available achievements
-  userAchievements: [], // Achievements earned by the user
+  achievements: [], // Array of achievements
   loading: false, // Loading state
   error: '', // Error message
 };
 
 // Fetch all achievements (API call)
 export const fetchAllAchievements = createAsyncThunk(
-  'achievement/fetchAll',
+  'achievements/fetchAll',
   async () => {
-    console.log('Fetching all achievements...');
+    console.log("Fetching achievements...");
     try {
-      const response = await axios.get('http://localhost:5000/api/achievements');
-      console.log('Fetched achievements:', response.data);
+      const response = await axios.get('/api/achievements');
+      console.log("Fetched achievements:", response.data); // Log the response data
       return response.data; // Return the fetched achievements
     } catch (error) {
-      console.log('Error fetching achievements:', error);
-     throw error // Return the error message
-    }
-  }
-);
-
-// Fetch user achievements (API call)
-export const fetchUserAchievements = createAsyncThunk(
-  'achievement/fetchUser',
-  async (userId: number) => {
-    console.log('Fetching user achievements...');
-    try {
-      const response = await axios.get(`http://localhost:5000/api/users/achievements/${userId}`);
-      console.log('Fetched user achievements:', response.data);
-      return response.data; // Return the fetched user achievements
-    } catch (error) {
-      console.log('Error fetching user achievements:', error);
-      throw error // Return the error message
-    }
-  }
-);
-
-// Assign an achievement to a user (API call)
-export const assignAchievement = createAsyncThunk(
-  'achievement/assign',
-  async ({ userId, achievementId }: { userId: number; achievementId: number }) => {
-    console.log('Assigning achievement...');
-    try {
-      const response = await axios.post('http://localhost:5000/api/achievements/users/assign', {
-        userId,
-        achievementId,
-      });
-      console.log('Assigned achievement:', response.data);
-      return response.data; // Return the assigned achievement
-    } catch (error) {
-      console.log('Error assigning achievement:', error);
+      console.log("Error fetching achievements:", error);
       throw error // Return the error message
     }
   }
@@ -63,54 +28,23 @@ export const assignAchievement = createAsyncThunk(
 
 // Create the slice
 const achievementSlice = createSlice({
-  name: 'achievement',
+  name: 'achievements',
   initialState,
   reducers: {
-    // Add any additional reducers here if needed
+    // You can add additional reducers here if needed
   },
   extraReducers: (builder) => {
     builder
-      // Fetch all achievements
       .addCase(fetchAllAchievements.pending, (state) => {
-        state.loading = true;
-        state.error = '';
+        state.loading = true; // Set loading to true when the request is pending
       })
       .addCase(fetchAllAchievements.fulfilled, (state, action) => {
-        state.loading = false;
-        state.allAchievements = action.payload;
+        state.loading = false; // Set loading to false when the request is fulfilled
+        state.achievements = action.payload; // Update the achievements array with the fetched data
       })
       .addCase(fetchAllAchievements.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-
-      // Fetch user achievements
-      .addCase(fetchUserAchievements.pending, (state) => {
-        state.loading = true;
-        state.error = '';
-      })
-      .addCase(fetchUserAchievements.fulfilled, (state, action) => {
-        state.loading = false;
-        state.userAchievements = action.payload;
-      })
-      .addCase(fetchUserAchievements.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-
-      // Assign achievement
-      .addCase(assignAchievement.pending, (state) => {
-        state.loading = true;
-        state.error = '';
-      })
-      .addCase(assignAchievement.fulfilled, (state, action) => {
-        state.loading = false;
-        //@ts-ignore
-        state.userAchievements.push(action.payload); // Add the new achievement to the user's list
-      })
-      .addCase(assignAchievement.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.loading = false; // Set loading to false when the request is rejected
+        state.error = action.payload as string; // Set the error message
       });
   },
 });
