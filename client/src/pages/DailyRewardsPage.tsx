@@ -1,14 +1,14 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import Dashboard from "../components/Dashboard";
+import DailyRewards from "../components/DailyRewards";
 
-const DashboardPage: React.FC = () => {
+const DailyRewardsPage: React.FC = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <Dashboard />
+      <DailyRewards />
     </div>
   );
 };
 
-export default DashboardPage;
+export default DailyRewardsPage;
