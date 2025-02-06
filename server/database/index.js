@@ -73,12 +73,12 @@ db.UserLanguage.belongsTo(db.User, { foreignKey: "user_id" });
 db.UserLanguage.belongsTo(db.Language, { foreignKey: "language_id" });
 
 // Sync the database (force: true will drop and recreate tables)
-sequelize.sync({ force: true })
-  .then(() => {
-    console.log("Database synced successfully.");
-  })
-  .catch((err) => {
-    console.error("Error syncing database:", err);
-  });
+// sequelize.sync({ force: true })
+//   .then(() => {
+//     console.log("Database synced successfully.");
+//   })
+//   .catch((err) => {
+//     console.error("Error syncing database:", err);
+//   });
 
 module.exports = db;
