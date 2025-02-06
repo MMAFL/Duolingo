@@ -29,11 +29,14 @@ module.exports = {
   updateLevel: async (req, res) => {
     try {
       const { level_title, unclock_points_required, xp_reward } = req.body;
-      const level = await Level.update({
-        level_title,
-        unclock_points_required,
-        xp_reward,
-      }, { where: { level_id: req.params.level_id } });
+      const level = await Level.update(
+        {
+          level_title,
+          unclock_points_required,
+          xp_reward,
+        },
+        { where: { level_id: req.params.level_id } }
+      );
 
       res.status(200).json(level);
     } catch (error) {
@@ -43,7 +46,9 @@ module.exports = {
 
   deleteLevel: async (req, res) => {
     try {
-      const level = await Level.destroy({ where: { level_id: req.params.level_id } });
+      const level = await Level.destroy({
+        where: { level_id: req.params.level_id },
+      });
       res.status(200).json(level);
     } catch (error) {
       res.status(500).json({ error: error.message });

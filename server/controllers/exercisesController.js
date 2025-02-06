@@ -18,7 +18,7 @@ module.exports = {
         exercise_title,
         exercise_description,
         exercise_image,
-        exercise_points,    
+        exercise_points,
       } = req.body;
 
       const exercise = await Exercise.create({

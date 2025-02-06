@@ -7,6 +7,9 @@ import DailyRewardsPage from "./pages/DailyRewardsPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import './App.css'
+import Gems from './components/gems.tsx'
+import Levels from './components/levels.tsx'
+import Store from './pages/store.tsx'
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -25,6 +28,8 @@ const App: React.FC = () => {
           element={isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />}
         />
         <Route path="/" element={<Navigate to="/register" />} />
+        <Route path="/store" element={<Store />} />
+
       </Routes>
     </Router>
   );
