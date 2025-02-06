@@ -26,25 +26,21 @@ sequelize
 
 const db = {
   Sequelize,
-  sequelize
+  sequelize,
+  User: require("./models/users")(sequelize, DataTypes),
+  Streak: require("./models/streaks")(sequelize, DataTypes),
+  Achievement: require("./models/achievements")(sequelize, DataTypes),
+  UserAchievement: require("./models/userAchievements")(sequelize, DataTypes),
+  Language: require("./models/languages")(sequelize, DataTypes),
+  UserLanguage: require("./models/userlanguages")(sequelize, DataTypes),
+  Level: require("./models/levels")(sequelize, DataTypes),
+  Lesson: require("./models/lessons")(sequelize, DataTypes),
+  Quiz: require("./models/quizzes")(sequelize, DataTypes),
+  UserProgress: require("./models/userProgresses")(sequelize, DataTypes),
+  Exercise: require("./models/exercises")(sequelize, DataTypes),
+  Hearts: require("./models/hearts")(sequelize, DataTypes),
+  Gems: require("./models/gems")(sequelize, DataTypes),
 };
-
-// Import models and assign directly to db object
-db.User = require("./models/users")(sequelize, DataTypes);
-db.Streak = require("./models/streaks")(sequelize, DataTypes);
-db.Achievement = require("./models/achievements")(sequelize, DataTypes);
-db.UserAchievement = require("./models/userAchievements")(sequelize, DataTypes);
-db.Language = require("./models/languages")(sequelize, DataTypes);
-db.UserLanguage = require("./models/userlanguages")(sequelize, DataTypes);
-db.Level = require("./models/levels")(sequelize, DataTypes);
-db.Lesson = require("./models/lessons")(sequelize, DataTypes);
-db.Quiz = require("./models/quizzes")(sequelize, DataTypes);
-db.UserProgress = require("./models/userProgresses")(sequelize, DataTypes);
-
-// Import new models
-db.Exercise = require("./models/exercises")(sequelize, DataTypes);
-db.Hearts = require("./models/hearts")(sequelize, DataTypes);
-db.Gems = require("./models/gems")(sequelize, DataTypes);
 
 // Define relationships
 
@@ -73,7 +69,7 @@ db.UserLanguage.belongsTo(db.User, { foreignKey: "user_id" });
 db.UserLanguage.belongsTo(db.Language, { foreignKey: "language_id" });
 
 // Sync the database (force: true will drop and recreate tables)
-// sequelize.sync({ force: true })
+// sequelize.sync({ force: false })
 //   .then(() => {
 //     console.log("Database synced successfully.");
 //   })
