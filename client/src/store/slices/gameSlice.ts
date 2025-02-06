@@ -2,6 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Lesson, DailyReward } from "../../types/gameTypes";
 
 interface GameState {
+  userProgress: {
+    xp: number;
+    hearts: number;
+    unlockPoints: number; // Added unlockPoints
+    streakDays: number; // Added streakDays
+  };
   levels: {
     levelId: number;
     title: string;
@@ -11,6 +17,12 @@ interface GameState {
 }
 
 const initialState: GameState = {
+  userProgress: {
+    xp: 0,
+    hearts: 3,
+    unlockPoints: 0, // Initialize with 0 unlockPoints
+    streakDays: 0, // Initialize with 0 streakDays
+  },
   levels: [
     {
       levelId: 1,
@@ -60,27 +72,45 @@ const gameSlice = createSlice({
 
       if (lesson) {
         lesson.completed = true;
+        // Increase XP when the lesson is completed
+        state.userProgress.xp += lesson.xpReward;
+
+        // Increase unlockPoints if the lesson requires it
+        if (lesson.unlockPointsRequired <= state.userProgress.unlockPoints) {
+          state.userProgress.unlockPoints += lesson.unlockPointsRequired;
+        }
       }
     },
     claimDailyReward(state, action: PayloadAction<{ rewardId: number }>) {
       const reward = state.dailyRewards.find(
         (reward) => reward.rewardId === action.payload.rewardId
       );
-      if (reward) {
+      if (reward && !reward.claimed) {
         reward.claimed = true;
+        // Add unlockPoints to userProgress when daily reward is claimed
+        state.userProgress.unlockPoints += reward.unlockPoints;
       }
     },
-    deductHeart(state, action: PayloadAction<{ heartId: number }>) {
-      const heart = state.levels
-        .flatMap((level) => level.lessons)
-        .find((lesson) => lesson.lessonId === action.payload.heartId);
-      if (heart) {
-        heart.xpReward = 0;
+    deductHeart(state) {
+      if (state.userProgress.hearts > 0) {
+        state.userProgress.hearts -= 1; // Deduct a heart
       }
+    },
+    incrementStreakDays(state) {
+      state.userProgress.streakDays += 1; // Increment streakDays when the user is active
+    },
+    resetStreakDays(state) {
+      state.userProgress.streakDays = 0; // Reset streakDays if the user misses a day
     },
   },
 });
 
-export const { completeLesson, claimDailyReward, deductHeart } =
-  gameSlice.actions;
+export const {
+  completeLesson,
+  claimDailyReward,
+  deductHeart,
+  incrementStreakDays,
+  resetStreakDays,
+} = gameSlice.actions;
+
 export default gameSlice.reducer;
