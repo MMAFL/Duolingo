@@ -1,14 +1,14 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import Dashboard from "../components/Dashboard";
+import Profile from "../components/Profile";
 
-const DashboardPage: React.FC = () => {
+const ProfilePage: React.FC = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <Dashboard />
+      <Profile />
     </div>
   );
 };
 
-export default DashboardPage;
+export default ProfilePage;

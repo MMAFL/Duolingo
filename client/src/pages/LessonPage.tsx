@@ -1,14 +1,14 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import Dashboard from "../components/Dashboard";
+import LessonList from "../components/LessonList";
 
-const DashboardPage: React.FC = () => {
+const LessonPage: React.FC = () => {
   return (
     <div style={{ display: "flex" }}>
       <Sidebar />
-      <Dashboard />
+      <LessonList />
     </div>
   );
 };
 
-export default DashboardPage;
+export default LessonPage;
