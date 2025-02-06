@@ -1,34 +1,39 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { RootState } from '../store/store';
 import "../styles/store.css"
 
 const Store = () => {
-    const dispatch = useDispatch();
-    const { hearts, gems, streakFreezes } = useSelector((state: RootState) => state.store);
+    // const dispatch = useDispatch();
+    // const storeState = useSelector((state: RootState) => state.store);
 
-    const handlePurchaseHearts = () => {
-        if (gems >= 350) {
-            dispatch({ type: 'PURCHASE_HEARTS' });
-        } else {
-            alert('Not enough gems!');
-        }
-    };
+    // // Add null checks and default values
+    // const hearts = storeState?.hearts || 0;
+    // const gems = storeState?.gems || 0;
+    // const streakFreezes = storeState?.streakFreezes || 0;
 
-    const handlePurchaseStreakFreeze = () => {
-        if (gems >= 200) {
-            dispatch({ type: 'PURCHASE_STREAK_FREEZE' });
-        } else {
-            alert('Not enough gems!');
-        }
-    };
+    // const handlePurchaseHearts = () => {
+    //     if (gems >= 350) {
+    //         dispatch({ type: 'PURCHASE_HEARTS' });
+    //     } else {
+    //         alert('Not enough gems!');
+    //     }
+    // };
+
+    // const handlePurchaseStreakFreeze = () => {
+    //     if (gems >= 200) {
+    //         dispatch({ type: 'PURCHASE_STREAK_FREEZE' });
+    //     } else {
+    //         alert('Not enough gems!');
+    //     }
+    // };
 
     return (
         <div className="store-container">
-            <div className="user-stats">
+            {/* <div className="user-stats">
                 <p>Hearts: {hearts}</p>
                 <p>Gems: {gems}</p>
                 <p>Streak Freezes: {streakFreezes}</p>
-            </div>
+            </div> */}
             <h2 className="heart-title">Hearts</h2>
             <div className="heart-container">
                 <div className="heart-purchase">
@@ -37,9 +42,10 @@ const Store = () => {
                         <h4 className="heart-purchase-name">refill Hearts</h4>
                         <p className="heart-purchase-description">Get full hearts so you can worry less about making mistakes in a lesson</p>
                     </div>
-                    <button className="heart-purchase-button" onClick={handlePurchaseHearts}>
+                    <button className="heart-purchase-button" >
                         <p className="heart-purchase-button-text">Get For:</p>
                         <div className="heart-purchase-button-price-container">
+
                             <img className="heart-purchase-button-gem" src="https://d35aaqx5ub95lt.cloudfront.net/images/gems/45c14e05be9c1af1d7d0b54c6eed7eee.svg" alt="gem" />
                             <p className="heart-purchase-button-price">350</p>
                         </div>
@@ -59,8 +65,9 @@ const Store = () => {
 
                             <p className="streak-freeze-purchase-description">Streak Freeze allows your streak to remain in place for one full day of inactivity.</p>
                         </div>
-                        <button className="streak-freeze-purchase-button" onClick={handlePurchaseStreakFreeze}>
+                        <button className="streak-freeze-purchase-button" >
                             <p className="streak-freeze-purchase-button-text">Get For:</p>
+
 
                             <div className="streak-freeze-purchase-button-price-container">
 
@@ -74,6 +81,7 @@ const Store = () => {
                 </div>
 
             </div>
+
         </div>
 
 

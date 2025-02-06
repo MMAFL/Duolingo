@@ -29,7 +29,7 @@ const App: React.FC = () => {
         />
         <Route path="/" element={<Navigate to="/register" />} />
         <Route path="/store" element={<Store />} />
-        
+
       </Routes>
     </Router>
   );
