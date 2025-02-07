@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import achievementReducer from "./reducers/achievementSlice"
+import userReducer from "./reducers/userSlice"
 
 const store = configureStore({
   reducer: {
    
-    achievement: achievementReducer
+    achievement: achievementReducer,
+    user: userReducer
 
   }
 })

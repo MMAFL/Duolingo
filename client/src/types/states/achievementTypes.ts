@@ -1,10 +1,11 @@
 // types/states/achievementTypes.ts
-export interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  reward: number;
-}
+interface Achievement {
+  achievement_id: number;
+  title: string;
+  description?: string;
+  xp_reward?: number;
+  completed: boolean; // Add this field to track completion
+};
 
 export interface AchievementState {
   allAchievements: Achievement[];

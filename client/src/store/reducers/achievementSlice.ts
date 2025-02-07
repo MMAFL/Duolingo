@@ -1,53 +1,73 @@
-// actions/achievementActions.ts
+// store/reducers/achievementSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { RootState } from '../store';
 
+interface Achievement {
+  achievement_id: number;
+  title: string;
+  description?: string;
+  xp_reward?: number;
+  completed: boolean;
+}
 
-// Define the initial state
-const initialState = {
-  achievements: [], // Array of achievements
-  loading: false, // Loading state
-  error: '', // Error message
+interface AchievementState {
+  achievements: Achievement[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: AchievementState = {
+  achievements: [],
+  loading: false,
+  error: null,
 };
 
-// Fetch all achievements (API call)
+const initialAchievements = [
+  {
+    achievement_id: 1,
+    title: "Lesson 1 Complete",
+    description: "Complete your first lesson",
+    xp_reward: 10,
+    completed: false
+  },
+  {
+    achievement_id: 2,
+    title: "Daily XP Goal",
+    description: "Earn 30 XP in one day",
+    xp_reward: 30,
+    completed: false
+  },
+  // ... other achievements
+];
+
 export const fetchAllAchievements = createAsyncThunk(
   'achievements/fetchAll',
   async () => {
-    console.log("Fetching achievements...");
-    try {
-      const response = await axios.get('/api/achievements');
-      console.log("Fetched achievements:", response.data); // Log the response data
-      return response.data; // Return the fetched achievements
-    } catch (error) {
-      console.log("Error fetching achievements:", error);
-      throw error // Return the error message
-    }
+    const response = await fetch('http://localhost:5000/api/achievements/');
+    return await response.json();
   }
 );
 
-// Create the slice
 const achievementSlice = createSlice({
-  name: 'achievements',
+  name: 'achievement',
   initialState,
-  reducers: {
-    // You can add additional reducers here if needed
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllAchievements.pending, (state) => {
-        state.loading = true; // Set loading to true when the request is pending
+        state.loading = true;
       })
       .addCase(fetchAllAchievements.fulfilled, (state, action) => {
-        state.loading = false; // Set loading to false when the request is fulfilled
-        state.achievements = action.payload; // Update the achievements array with the fetched data
+        state.loading = false;
+        state.achievements = action.payload;
       })
       .addCase(fetchAllAchievements.rejected, (state, action) => {
-        state.loading = false; // Set loading to false when the request is rejected
-        state.error = action.payload as string; // Set the error message
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch achievements';
       });
   },
 });
 
-// Export the slice reducer
+export const selectAchievements = (state: RootState) => state.achievement;
+
 export default achievementSlice.reducer;

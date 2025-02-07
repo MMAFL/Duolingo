@@ -10,14 +10,15 @@ import './App.css'
 import Gems from './components/gems.tsx'
 import Levels from './components/levels.tsx'
 import Store from './pages/store.tsx'
-
+import AchievementList from "./components/AchievementList.tsx"
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem("token");
+
 
   return (
     <Router>
       <Routes>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/" element={<AchievementList />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/lessons" element={<LessonPage />} />
         <Route path="/daily-rewards" element={<DailyRewardsPage />} />
