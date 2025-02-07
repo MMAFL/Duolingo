@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './config/secret.env' }); // Load secret.env
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const port = 5000;
@@ -19,7 +19,10 @@ const authRoute = require("./routes/authsRoute");
 // Middleware
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Import routes
+const userRoutes = require("./routes/usersRoute");
+const authRoutes = require("./routes/authsRoute");
 
 // Mount routes
 app.use("/api/users", userRoute);
@@ -32,6 +35,14 @@ app.use('/api/gems', gemsRoute);
 app.use('/api/levels', levelsRoute);
 app.use('/api/achievements', achievementRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
 // After initializing your database
 db.sequelize.sync()
