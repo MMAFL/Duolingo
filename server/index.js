@@ -1,59 +1,32 @@
-require('dotenv').config();
 const express = require("express");
-const app = express();
-const port = 5000;
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const db = require('./database');
 
-// Import routes
-const userRoute = require("./routes/usersRoute");
-const streakRoute = require("./routes/streaksRoute");
-const lessonRoute = require("./routes/lessonsRoute");
-const languageRoute = require("./routes/languagesRoute");
-const achievementRoute = require("./routes/achievementsRoute");
-const exercisesRoute = require('./routes/exercisesRoute');
-const gemsRoute = require('./routes/gemsRoute');
-const levelsRoute = require('./routes/levelsRoute');
-const authRoute = require("./routes/authsRoute");
+const authRoutes = require("./routes/auth.route.js");
+const unitRoutes = require("./routes/unit.route.js");
+const lessonRoutes = require("./routes/lesson.route.js");
+const questionRoutes = require("./routes/question.route.js");
+const userProgressRoutes = require("./routes/userProgress.route.js");
+const verifyToken = require("./middlewares/verifyToken.js");
+const db = require("./models/index.js");
 
-// Middleware
-app.use(cors({ origin: "http://localhost:5173" }));
+dotenv.config();
+
+const app = express();
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
-// Import routes
-const userRoutes = require("./routes/usersRoute");
-const authRoutes = require("./routes/authsRoute");
+const port = process.env.PORT || 3000;
 
-// Mount routes
-app.use("/api/users", userRoute);
-app.use("/api/streaks", streakRoute);
-app.use("/api/lessons", lessonRoute);
-app.use("/api/languages", languageRoute);
-app.use('/api/streaks', streakRoute);
-app.use('/api/exercises', exercisesRoute);
-app.use('/api/gems', gemsRoute);
-app.use('/api/levels', levelsRoute);
-app.use('/api/achievements', achievementRoute);
-app.use("/api/auth", authRoute);
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // without verify token
+app.use("/api/unit", unitRoutes);
+app.use("/api/lesson", lessonRoutes);
+app.use("/api/question", questionRoutes);
+app.use("/api/user-progress", userProgressRoutes);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
+app.listen(port, () => {
+  console.log(`Server started on port: ${port}`);
 });
-
-// After initializing your database
-db.sequelize.sync()
-  .then(() => {
-    console.log('Database synced successfully');
-    // Start your server here
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('Error syncing database:', err);
-  });
