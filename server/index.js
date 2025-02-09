@@ -3,9 +3,9 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-const authRoutes = require("./routes/auth.route.js");
+const authRoutes = require("./routes/auth.routes.js");
 const unitRoutes = require("./routes/unit.route.js");
-const lessonRoutes = require("./routes/lesson.route.js");
+const lessonRoutes = require("./routes/lesson.routes.js");
 const questionRoutes = require("./routes/question.route.js");
 const userProgressRoutes = require("./routes/userProgress.route.js");
 const verifyToken = require("./middlewares/verifyToken.js");
